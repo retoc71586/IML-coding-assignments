@@ -137,7 +137,7 @@ def image_from_directory_generator(directory_name, batch_size):
         batch = []
 
         while len(batch) < batch_size:
-            img_name= directory_name + str(int(curr_idx)) + ".jpg"
+            img_name = directory_name + str(int(curr_idx)) + ".jpg"
             img = load_img(img_name)
             img = tf.keras.applications.inception_resnet_v2.preprocess_input(img_to_array(img))
             batch.append(img)

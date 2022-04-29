@@ -1,13 +1,15 @@
 import torch
 from torchvision import datasets, transforms
 import numpy as np
-import cv2, os
+import cv2, os, tqdm, time
+from tqdm import tqdm
+from os import listdir
 from PIL import Image
 from math import floor
 
 def testings():
 
-    image_root = "/Users/PELLERITO/Desktop/Task3/food/"
+    image_root = "./food/"
     image_file = "00000.jpg"
     image = Image.open(os.path.join(image_root, image_file))
     model = load_backbone()
@@ -21,8 +23,10 @@ def load_backbone():
     model.eval()
     return model
 
-def backbone(image_orig, model):
+def backbone():
     # try with resnet152
+    model = load_backbone()
+    # NB: the model outputs one single row feature for each image
 
     # standardize the image
     preprocess = transforms.Compose([
@@ -31,12 +35,27 @@ def backbone(image_orig, model):
         transforms.ToTensor(),
         transforms.Normalize(mean=[0.485, 0.456, 0.406], std=[0.229, 0.224, 0.225]),
     ])
-    image = preprocess(image_orig)
-    image = image.unsqueeze(0)
 
-    # run inference
-    out = model(image)
-    return out
+    # Will contain the feature
+    features = []
+
+    # Iterate each image
+    curr_dir = os.getcwd()
+    # Set the image path
+    image_root = curr_dir + "/food"
+    for image_file in tqdm(os.listdir(image_root), desc='Extracting features from food images'):
+        if image_file.endswith(".jpg"):
+            # Read the file
+            img = Image.open(os.path.join(image_root, image_file))
+            # Transform the image
+            image = preprocess(img)
+            image = image.unsqueeze(0)
+            out = model(image)
+            np_out = out.detach().numpy()
+            # Convert to NumPy Array, Reshape it, and save it to features variable
+            features.append(np_out)
+    print('features contains ', len(features), 'elements')
+    return(features)
 
 def get_correct_shape(image):
     # pad the image
