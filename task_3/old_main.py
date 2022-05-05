@@ -1,6 +1,9 @@
 ## Libraries
 # General purpose libraries
 import os
+
+import torch
+from PIL import Image
 import pickle
 import random
 import numpy as np
@@ -13,6 +16,10 @@ from keras.preprocessing.image import load_img, img_to_array, array_to_img
 from keras.models import Model, load_model
 from keras.layers import Dense, Dropout, Activation, Flatten, BatchNormalization
 from keras.layers import Conv2D, MaxPooling2D, Input, Lambda
+import utils
+import utilities
+import cv2
+from torchvision import transforms
 
 ## Execution parameters
 # Shape of the resized images
@@ -113,7 +120,7 @@ def gen_resized_dataset(zip_file,res_img_dir,res_shape):
 def feature_extraction_net(input_shape):
 
     # resnet feature extraction
-    resnet_inception = tf.keras.applications.InceptionResNetV2(pooling='avg',include_top=False)
+    resnet_inception = tf.keras.applications.InceptionResNetV2(pooling='avg', include_top=False)
     # resnet takes care of features extraction
     resnet_inception.trainable = False
 
@@ -126,7 +133,7 @@ def feature_extraction_net(input_shape):
 
     return model
 
-# Image generator
+# Image generatorl
 def image_from_directory_generator(directory_name, batch_size):
     # Image indices
     num_images = 10000
@@ -160,7 +167,7 @@ def feature_extraction():
     res_imgs = image_from_directory_generator(res_img_dir,1)
 
     # Compute features
-    x_feat = feature_extraction.predict(res_imgs,steps=10000)
+    x_feat = feature_extraction.predict(res_imgs, steps=10000)
 
     # Return features vector
     return x_feat
@@ -243,11 +250,39 @@ def buildTripletTensor(features, triplets_file, gen_labels=False):
     else:
         return train_tensors
 
+
+
 ## Code
 def main():
+    preprocess = transforms.Compose([
+        transforms.Resize(256),
+        transforms.CenterCrop(224),
+        transforms.ToTensor(),
+        transforms.Normalize(mean=[0.485, 0.456, 0.406], std=[0.229, 0.224, 0.225]),
+    ])
+
+    image_root = "/Users/PELLERITO/Desktop/Task3/food/"
+    image_file = "00000.jpg"
+    image_orig = Image.open(os.path.join(image_root, image_file))
+    #image_orig = cv2.imread(image_root + image_file)
+    image = preprocess(image_orig)
+    #image = torch.from_numpy(image)
+    print(image.shape)
+    #image = torch.squeeze(image)
+    #image = torch.transpose(image, 0, 2)
+    image = image.unsqueeze(0)
+    print(image.shape)
+
+    out = utils.backbone(image)
+    print(out)
+
+def main_old():
     # Generate images
     #gen_resized_dataset(images_archive, res_img_dir, img_shape)
     # Check if features have already been extracted
+
+
+
     if(os.path.exists(features_file)):
         # Load features
         with open(features_file, 'rb') as f:
