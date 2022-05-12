@@ -7,8 +7,6 @@ from os import listdir
 from PIL import Image
 from math import floor
 import utils_manzo
-from numpy import genfromtxt
-import csv
 import numpy as np
 
 
@@ -47,7 +45,7 @@ def backbone():
     ])
 
     if os.path.exists(features_path):
-        print('Features already extracted. Loading them from', features_path,'!\n')
+        print('Features already extracted. Loading them from', features_path, '!')
         # Load features
         data = np.genfromtxt('my_features.csv', delimiter=",")
         features = np.array(data)

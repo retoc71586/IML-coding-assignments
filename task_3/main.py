@@ -1,18 +1,33 @@
+import classificationNetTF
+import classificationNetTorch
 import utils_manzo
 import utils_pelt
-import classificationNet
 
 
 def main():
+    train = True
+    torch = False
+
     # unzipping
     utils_manzo.unzip('food.zip')
 
-    # features extraction
-    features = utils_pelt.backbone()
+    if torch:
+        # features extraction
+        features = utils_pelt.backbone()
 
-    # load classification net
-    net = classificationNet.ClassificationNet().double()
-    utils_manzo.trainModel(net, features)
+        # load classification net
+        net = classificationNetTorch.ClassificationNet().double()
+        # train
+        if train:
+            print('Training mode')
+            utils_manzo.trainModelTorch(net, features)
+        # test
+        if not train:
+            print('Eval mode')
+            utils_manzo.evaluateModelTorch(net, features)
+
+    if not torch:
+        utils_manzo.pipeline_tensorflow()
 
 
 if __name__ == '__main__':
