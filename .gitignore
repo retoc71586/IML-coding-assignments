@@ -10,7 +10,7 @@
 /task_3/features.pckl
 /task_3/veryBigModel
 
-*DS_Store
+*.DS_Store
 venv/
 .idea/
 python-tutorial/
