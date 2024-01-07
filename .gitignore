@@ -1,3 +1,17 @@
 /task_3/food.zip
 /task_3/food/
 /task_3/my_features.csv
+/task_3/classification_net.pth
+/task_3/altre_versioni
+/task_3/checkpoints
+/task_3/output.txt
+/task_3/my_features.pckl
+/task_3/resized_images
+/task_3/features.pckl
+/task_3/veryBigModel
+
+*DS_Store
+
+
+.idea/
+python-tutorial/
