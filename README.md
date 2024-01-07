@@ -1,4 +1,4 @@
-# IML-coding-assignments
+# IML-coding-assignments 🚩
 
 Introduction to Machine Learning Projects
 Term projects for ETH Zurich Introduction to Machine Learning course. Projects were about practicing supervised learning tasks.
@@ -26,7 +26,7 @@ Subtask 3: (Key Vital Signs Predictions) Predict the mean value of a vital sign 
 
 Implemented Deep Ranking architecture and used pre-trained resnet18 model as backbone. The inputs are triplets of images where we try to determine which of the 2nd and 3rd images are closest to the 1st image. Our architecture consists of 3 parallel networks (a, p, n) which are query, positive and negative networks respectively. Our networks performs a binary classification where we output 1 if 2nd image in the triplet is closer to 1st image, 0 otherwise.
 
-## Results
+## 📊 Results
 
 Task 1b: Achieved an RMSE of 2.064
 
