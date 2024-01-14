@@ -19,12 +19,12 @@ Project topics are as follow:
 ##### Subtask 3: (Key Vital Signs Predictions) Predict the mean value of a vital sign in the remaining stay to predict a more general evolution of the patient state. (Regression task)
 
 ### ⚙️ Task 3: 
-#### Classify mutations of a human antibody protein into active (1) and inactive (0) based on the provided mutation information.
-
-### ⚙️ Task 4: 
 #### Make decisions on food taste similarity based on images and human judgements.
 
 Implemented Deep Ranking architecture and used pre-trained resnet18 model as backbone. The inputs are triplets of images where we try to determine which of the 2nd and 3rd images are closest to the 1st image. Our architecture consists of 3 parallel networks (a, p, n) which are query, positive and negative networks respectively. Our networks performs a binary classification where we output 1 if 2nd image in the triplet is closer to 1st image, 0 otherwise.
+
+### ⚙️ Task 4: 
+#### Classify mutations of a human antibody protein into active (1) and inactive (0) based on the provided mutation information.
 
 ## 📊 Results
 
